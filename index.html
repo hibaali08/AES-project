@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AES Encryptor</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light p-4">
+  <div class="container">
+    <h1 class="text-center mb-4">AES Encryption & Decryption</h1>
+
+    <!-- Plaintext Encryption -->
+    <div class="card mb-4">
+      <div class="card-header">Encrypt Plaintext</div>
+      <div class="card-body">
+        <form method="POST">
+          <div class="mb-3">
+            <label class="form-label">Plaintext:</label>
+            <input type="text" class="form-control" name="plaintext" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">16-byte Key (hex):</label>
+            <input type="text" class="form-control" name="key" placeholder="e.g., 2b7e151628aed2a6abf7158809cf4f3c" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Encrypt</button>
+        </form>
+        {% if encrypted %}
+          <div class="alert alert-success mt-3">
+            <strong>Encrypted (Hex):</strong> {{ encrypted }}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Ciphertext Decryption -->
+    <div class="card mb-4">
+      <div class="card-header">Decrypt Ciphertext</div>
+      <div class="card-body">
+        <form method="POST">
+          <div class="mb-3">
+            <label class="form-label">Encrypted Hex:</label>
+            <input type="text" class="form-control" name="ciphertext" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">16-byte Key (hex):</label>
+            <input type="text" class="form-control" name="key" required>
+          </div>
+          <button type="submit" class="btn btn-danger">Decrypt</button>
+        </form>
+        {% if decrypted %}
+          <div class="alert alert-info mt-3">
+            <strong>Decrypted Plaintext:</strong> {{ decrypted }}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- File Encryption -->
+    <div class="card mb-4">
+      <div class="card-header">Encrypt a File</div>
+      <div class="card-body">
+        <form action="/encrypt-file" method="post" enctype="multipart/form-data">
+          <div class="mb-3">
+            <label class="form-label">Upload File (.txt):</label>
+            <input type="file" class="form-control" name="file" accept=".txt" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">16-byte Key (hex):</label>
+            <input type="text" class="form-control" name="key" required>
+          </div>
+          <button type="submit" class="btn btn-success">Encrypt File</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- File Decryption -->
+    <div class="card mb-4">
+      <div class="card-header">Decrypt a File</div>
+      <div class="card-body">
+        <form action="/decrypt-file" method="post" enctype="multipart/form-data">
+          <div class="mb-3">
+            <label class="form-label">Upload File (.aes):</label>
+            <input type="file" class="form-control" name="file" accept=".aes" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">16-byte Key (hex):</label>
+            <input type="text" class="form-control" name="key" required>
+          </div>
+          <button type="submit" class="btn btn-warning">Decrypt File</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
